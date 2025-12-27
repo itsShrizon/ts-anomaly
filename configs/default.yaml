@@ -1,0 +1,24 @@
+data:
+  dataset: skab
+  window: 64
+  stride: 8
+  batch_size: 128
+  num_workers: 2
+
+model:
+  hidden: 64
+  rnn_layers: 2
+  attn_layers: 2
+  heads: 4
+  dropout: 0.1
+
+train:
+  epochs: 40
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  grad_clip: 1.0
+  patience: 6
+
+loss:
+  alpha: 0.25
+  gamma: 2.0
