@@ -1,0 +1,9 @@
+.git
+data
+mlruns
+checkpoints
+*.onnx
+__pycache__
+.venv
+notebooks
+tests
