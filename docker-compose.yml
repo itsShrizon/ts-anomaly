@@ -1,0 +1,14 @@
+services:
+  bench:
+    build: .
+    volumes:
+      - ./artifacts:/models:ro
+    command: ["scripts.bench", "--model", "/models/model.int8.onnx"]
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.12.1
+    command: mlflow server --host 0.0.0.0 --backend-store-uri /mlruns
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns
