@@ -1,0 +1,5 @@
+pytest
+ruff
+mlflow>=2.10
+onnx
+onnxruntime>=1.17
