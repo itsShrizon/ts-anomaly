@@ -1,5 +1,4 @@
 """sliding windows over multivariate series."""
-from typing import Iterator, Tuple
 import numpy as np
 
 
@@ -15,7 +14,10 @@ def sliding(x: np.ndarray, win: int, stride: int = 1) -> np.ndarray:
 
 
 def windowed_labels(y: np.ndarray, win: int, stride: int = 1) -> np.ndarray:
-    """label at end of window."""
-    if len(y) < win:
+    """label at end of window, same count as sliding()."""
+    t = len(y)
+    if t < win:
         return np.empty((0,), dtype=y.dtype)
-    return y[win - 1::stride][:((len(y) - win) // stride + 1)]
+    n = (t - win) // stride + 1
+    ends = (np.arange(n) * stride) + (win - 1)
+    return y[ends]
