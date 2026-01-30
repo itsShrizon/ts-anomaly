@@ -1,0 +1,5 @@
+# hyperparam grid. consumed by scripts/sweep.py
+grid:
+  train.lr: [3.0e-4, 1.0e-3, 3.0e-3]
+  model.hidden: [32, 64, 128]
+  data.window: [32, 64, 128]
