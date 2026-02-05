@@ -6,6 +6,8 @@ import torch
 from src import track
 from src.config import load as load_cfg
 from src.data.factory import build_loaders
+from src.device import pick as pick_device
+from src.log_setup import setup as setup_log
 from src.models.hybrid import HybridAnomaly
 from src.models.loss import FocalBCE
 from src.train.checkpoint import save
@@ -20,8 +22,10 @@ def main():
     ap.add_argument("--run", default="default")
     args = ap.parse_args()
 
+    log = setup_log()
     cfg = load_cfg(args.config)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = pick_device()
+    log.info("device=%s", device)
 
     track.start(args.run, {"lr": cfg.train.lr, "hidden": cfg.model.hidden, "win": cfg.data.window})
 
@@ -36,10 +40,10 @@ def main():
         tr = train_one_epoch(model, dl_tr, opt, loss_fn, device, cfg.train.grad_clip)
         va = evaluate(model, dl_va, loss_fn, device)
         track.log({"train_loss": tr, "val_loss": va}, step=epoch)
-        print(f"epoch {epoch:03d}  train {tr:.4f}  val {va:.4f}")
+        log.info("epoch %03d  train %.4f  val %.4f", epoch, tr, va)
         save(model, opt, epoch, args.out)
         if stopper.step(va):
-            print("early stop")
+            log.info("early stop @ %d", epoch)
             break
 
     track.artifact(args.out)
