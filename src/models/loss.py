@@ -18,6 +18,6 @@ class FocalBCE(nn.Module):
         bce = F.binary_cross_entropy_with_logits(logits, y, reduction="none")
         # p_t in log-space: avoids sigmoid on large |logits|
         logp = -bce  # = log p_t
-        pt = logp.exp().clamp_(max=1.0)
+        pt = logp.exp().clamp(max=1.0)
         w = torch.where(y > 0.5, self.alpha, 1 - self.alpha)
         return (w * (1 - pt).pow(self.gamma) * bce).mean()
