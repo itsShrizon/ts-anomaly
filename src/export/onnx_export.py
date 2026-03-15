@@ -14,5 +14,6 @@ def export(model, in_dim: int, win: int, out: str | Path, opset: int = 17) -> Pa
         input_names=["x"], output_names=["score"],
         dynamic_axes={"x": {0: "batch", 1: "time"}, "score": {0: "batch"}},
         opset_version=opset,
+        dynamo=False,
     )
     return out
