@@ -5,9 +5,10 @@ import numpy as np
 def median_smooth(x: np.ndarray, k: int = 5) -> np.ndarray:
     if k <= 1:
         return x
+    if k % 2 == 0:
+        k += 1  # force odd window; center is well-defined
     pad = k // 2
     xp = np.pad(x, (pad, pad), mode="edge")
-    out = np.empty_like(x)
-    for i in range(len(x)):
-        out[i] = np.median(xp[i:i + k])
-    return out
+    # stride trick: (N, k) view → median along axis=1
+    from numpy.lib.stride_tricks import sliding_window_view
+    return np.median(sliding_window_view(xp, k), axis=1)
