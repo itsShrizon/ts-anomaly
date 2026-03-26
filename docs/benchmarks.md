@@ -18,3 +18,12 @@ target: <50ms per window on Pi 4B. int8 clears it with headroom.
 | CMAPSS FD001 |  0.84  |   0.82  |   0.83  |    0.93  |
 
 int8 drops F1 by ~0.8-1.1 pp relative to fp32 on both.
+
+## smoothing cost
+
+`median_smooth` on a 100k-point score vector:
+
+| version        |  time |
+|----------------|------:|
+| python loop    | 480 ms |
+| stride-view    |  56 ms |
