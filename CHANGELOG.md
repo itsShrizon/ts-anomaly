@@ -1,11 +1,16 @@
 # changelog
 
+## 0.4.0 — 2026-04
+- `HybridAnomaly` exposes `pool={last,mean}` — mean pool wins on CMAPSS, last on SKAB
+- eval report helper + cli
+- runbook: drift triage + thread tuning per device
+- `median_smooth` handles empty input cleanly
+
 ## 0.3.1 — 2026-03
-- focal loss rewritten in log-space (no more NaNs at |logit| > 30)
-- smoothing vectorized via `sliding_window_view` (~8x faster on long series)
+- focal loss rewritten in log-space (stable at |logit| > 30)
+- smoothing vectorized via `sliding_window_view` (~8x faster)
 - bench script gained `--batch` and `--threads` knobs
-- ci: added smoke-export job that builds an onnx model end-to-end
-- synthetic sample data generator for dry runs
+- ci: smoke-export job builds an onnx model end-to-end
 
 ## 0.3.0 — 2026-02
 - turbofan dataset wired in w/ RUL<30 cycle anomaly label
