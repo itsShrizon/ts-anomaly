@@ -4,7 +4,6 @@ import pandas as pd
 
 from .loader import data_root
 
-
 COLS = ["unit", "cycle"] + [f"op{i}" for i in range(1, 4)] + [f"sensor{i}" for i in range(1, 22)]
 
 

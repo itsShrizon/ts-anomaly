@@ -23,17 +23,20 @@ def main():
     ap.add_argument("--grid", default="configs/sweep.yaml")
     args = ap.parse_args()
 
-    base = yaml.safe_load(open(args.base))
-    grid = yaml.safe_load(open(args.grid))["grid"]
+    with open(args.base) as f:
+        base = yaml.safe_load(f)
+    with open(args.grid) as f:
+        grid = yaml.safe_load(f)["grid"]
     keys = list(grid.keys())
 
     for combo in itertools.product(*(grid[k] for k in keys)):
         cfg = copy.deepcopy(base)
-        for k, v in zip(keys, combo):
+        for k, v in zip(keys, combo, strict=True):
             _set(cfg, k, v)
-        name = "__".join(f"{k.split('.')[-1]}={v}" for k, v in zip(keys, combo))
+        name = "__".join(f"{k.split('.')[-1]}={v}" for k, v in zip(keys, combo, strict=True))
         out = f"/tmp/{name}.yaml"
-        yaml.safe_dump(cfg, open(out, "w"))
+        with open(out, "w") as f:
+            yaml.safe_dump(cfg, f)
         subprocess.run([sys.executable, "scripts/train.py", "--config", out, "--run", name], check=True)
 
 

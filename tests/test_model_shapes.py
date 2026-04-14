@@ -1,4 +1,5 @@
 import torch
+
 from src.models.hybrid import HybridAnomaly
 
 

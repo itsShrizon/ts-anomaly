@@ -2,7 +2,6 @@
 """short training run + onnx export + int8 quant — populates artifacts/ end-to-end."""
 from pathlib import Path
 
-import numpy as np
 import torch
 
 from src.config import load as load_cfg

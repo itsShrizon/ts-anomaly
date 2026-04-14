@@ -1,6 +1,6 @@
 """int8 quantization via onnxruntime. static preferred, dynamic as fallback."""
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 import numpy as np
 

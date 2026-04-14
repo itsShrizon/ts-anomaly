@@ -7,7 +7,6 @@ import pandas as pd
 
 from .loader import data_root
 
-
 SENSOR_COLS = ["Accelerometer1RMS", "Accelerometer2RMS", "Current",
                "Pressure", "Temperature", "Thermocouple", "Voltage", "Volume Flow RateRMS"]
 
