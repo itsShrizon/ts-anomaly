@@ -60,10 +60,28 @@ src/
   eval/       # metrics, threshold, report
   export/     # onnx + int8 quant
   infer/      # ort session, batched scoring, smoothing
-scripts/      # train, export, bench, infer, eval, sweep
+  warehouse/  # star-schema reporting layer (postgres / sqlserver / sqlite)
+scripts/      # train, export, bench, infer, eval, sweep, run_report
 configs/      # default.yaml, turbofan.yaml, sweep.yaml
-docs/         # architecture, benchmarks, runbook
+docs/         # architecture, benchmarks, runbook, warehouse
 ```
+
+## reporting warehouse
+
+For MIS/FIS-style scheduled reporting, detection outputs can be persisted to a
+star-schema warehouse and queried via the same SQL on PostgreSQL, SQL Server,
+or SQLite (test backend).
+
+```bash
+python scripts/run_report.py \
+    --db artifacts/warehouse.sqlite \
+    --run-name skab_v1 \
+    --out-dir artifacts/reports/skab_v1
+```
+
+DDL files: `src/warehouse/schema/{postgres,sqlserver,sqlite}.sql`.
+Reusable queries (daily counts, top-N windows, confusion, drift):
+`src/warehouse/queries.py`.
 
 ## license
 
